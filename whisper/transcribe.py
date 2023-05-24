@@ -353,6 +353,8 @@ def transcribe(
                     )
                 ]
             )
+
+            all_tokens = all_tokens[:-len(initial_prompt_tokens)]       # remove intitial prompts
             all_tokens.extend(
                 [token for segment in current_segments for token in segment["tokens"]]
             )
@@ -360,6 +362,8 @@ def transcribe(
             if not condition_on_previous_text or result.temperature > 0.5:
                 # do not feed the prompt tokens if a high temperature was used
                 prompt_reset_since = len(all_tokens)
+
+            all_tokens.extend(initial_prompt_tokens)        # add initial prompts back on (this ensures they are used throughout the entire transcription)
 
             # update progress bar
             pbar.update(min(content_frames, seek) - previous_seek)
