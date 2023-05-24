@@ -369,7 +369,7 @@ def transcribe(
             pbar.update(min(content_frames, seek) - previous_seek)
 
     return dict(
-        text=tokenizer.decode(all_tokens[len(initial_prompt_tokens) :]),
+        text=tokenizer.decode(all_tokens),
         segments=all_segments,
         language=language,
     )
